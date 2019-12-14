@@ -13,7 +13,7 @@ $this->title = 'Войти';
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+    <p>Пойжалуйста заполните поля для входа:</p>
 
     <div class="row">
         <div class="col-lg-5">
@@ -26,13 +26,13 @@ $this->title = 'Войти';
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
                 <div style="color:#999;margin:1em 0">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                    <br>
-                    Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
+                    <?= Html::a('Восстановление пароля', ['/user/default/request-password-reset']) ?>.
+                    <hr>
+                    <?= Html::a('Подтвердить e-mail', ['/user/default/resend-verification-email']) ?>
                 </div>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>
@@ -41,7 +41,7 @@ $this->title = 'Войти';
             <h3>Войти через Вконтакте</h3>
             <?=
             yii\authclient\widgets\AuthChoice::widget([
-                'baseAuthUrl' => ['site/auth'],
+                'baseAuthUrl' => ['/user/default/auth'],
                 'popupMode' => false,
             ])
             ?>
