@@ -70,17 +70,17 @@ class AuthHandler
         $id = ArrayHelper::getValue($attributes, 'id');
         $last_name = ArrayHelper::getValue($attributes, 'last_name');
         $first_name = ArrayHelper::getValue($attributes, 'first_name');
-        $name = ArrayHelper::getValue($attributes, 'screen_name');;
+        $username = ArrayHelper::getValue($attributes, 'screen_name');;
 
         if (!$email) {
-            $email = 'https://vk.com/' . $name;
+            $email = 'https://vk.com/' . $username;
         }
 
-        if ($email !== null && User::find()->where(['email' => $email])->exists()) {
+        if ($username !== null && User::find()->where(['username' => $username])->exists()) {
             return;
         }
 
-        $user = $this->createUser($email, $name);
+        $user = $this->createUser($email, $username);
         $user->status = User::STATUS_ACTIVE;
         $user->last_name = $last_name ? $last_name : null;
         $user->first_name = $first_name ? $first_name : null;
