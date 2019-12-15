@@ -32,18 +32,20 @@ AppAsset::register($this);
         'brandLabel' => 'Тестирование ПДД',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-fixed-top',
+            'class' => 'navbar-fixed-top navbar-inverse',
         ],
     ]);
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/site/index']],
-//          ['label' => 'About', 'url' => ['/site/about']],
-//          ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Регистрация', 'url' => ['/user/default/signup']];
         $menuItems[] = ['label' => 'Вход', 'url' => ['/user/default/login']];
     } else {
+        $menuItems = [
+                ['label' => 'О сайте', 'url' => ['/user/profile/about']],
+                ['label' => 'Написать отзыв', 'url' => ['/user/profile/contact']],
+        ];
         $username = Yii::$app->user->identity->first_name
             ? Yii::$app->user->identity->first_name . ' ' . Yii::$app->user->identity->last_name
             : Yii::$app->user->identity->username;
