@@ -32,7 +32,7 @@ AppAsset::register($this);
         'brandLabel' => 'Тестирование ПДД',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-fixed-top navbar-inverse',
+            'class' => 'navbar-fixed-top',
         ],
     ]);
     $menuItems = [

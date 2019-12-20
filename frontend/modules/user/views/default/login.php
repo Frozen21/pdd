@@ -11,12 +11,13 @@ $this->title = 'Войти';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Пойжалуйста заполните поля для входа:</p>
-
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <h1><?= Html::encode($this->title) ?></h1>
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
@@ -27,24 +28,20 @@ $this->title = 'Войти';
 
                 <div style="color:#999;margin:1em 0">
                     <?= Html::a('Восстановление пароля', ['/user/default/request-password-reset']) ?>.
-                    <hr>
                     <?= Html::a('Подтвердить e-mail', ['/user/default/resend-verification-email']) ?>
                 </div>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
                 </div>
 
-            <?php ActiveForm::end(); ?>
-        </div>
-        <div class="col-lg-5">
-            <h3>Войти через Вконтакте</h3>
-            <?=
-            yii\authclient\widgets\AuthChoice::widget([
-                'baseAuthUrl' => ['/user/default/auth'],
-                'popupMode' => false,
-            ])
+                <?=
+                yii\authclient\widgets\AuthChoice::widget([
+                    'baseAuthUrl' => ['/user/default/auth'],
+                    'popupMode' => false,
+                ])
             ?>
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
