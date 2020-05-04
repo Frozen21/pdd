@@ -24,12 +24,18 @@ use yii\web\IdentityInterface;
  * @property string $last_name
  * @property string $first_name
  * @property string $phone
+ * @property bool $actual
+ * @property bool $type
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
-    const STATUS_ACTIVE = 10;
+    const STATUS_DELETED = 0; // Удаленный пользователь
+    const STATUS_INACTIVE = 9; // Неактивнй опльзователь
+    const STATUS_ACTIVE = 10; // Активный пользователь
+
+    const TYPE_ADMIN = 1; // Админ
+    const TYPE_TEACHER = 2; // Автошкола/инструктор
+    const TYPE_USER = 3; // Пользователь/ученик
 
 
     /**

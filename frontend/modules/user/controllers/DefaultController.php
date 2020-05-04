@@ -2,6 +2,7 @@
 
 namespace frontend\modules\user\controllers;
 
+use frontend\models\User;
 use yii\web\Controller;
 use frontend\modules\user\models\ResendVerificationEmailForm;
 use frontend\modules\user\models\VerifyEmailForm;
@@ -112,14 +113,21 @@ class DefaultController extends Controller
      */
     public function actionSignup()
     {
+        $user_type = Yii::$app->request->post('user_type');
+        // По умолчанию на фронте идет регистрация Автошколы.
+        if (empty($user_type)) {
+            $user_type = User::TYPE_TEACHER;
+        }
+
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+        if ($model->load(Yii::$app->request->post()) && $model->signup($user_type)) {
             Yii::$app->session->setFlash('success', 'Спасибо за регистрацию, на указанную вами на почту выслано письмо.');
             return $this->goHome();
         }
 
         return $this->render('signup', [
             'model' => $model,
+            'user_type' => $user_type,
         ]);
     }
 

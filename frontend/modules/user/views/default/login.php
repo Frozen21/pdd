@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use frontend\models\User;
 
 $this->title = 'Войти';
 //$this->params['breadcrumbs'][] = $this->title;
@@ -24,24 +25,39 @@ $this->title = 'Войти';
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div style="color:#999;margin:1em 0">
-                    <?= Html::a('Восстановление пароля', ['/user/default/request-password-reset']) ?>.
-                    <?= Html::a('Подтвердить e-mail', ['/user/default/resend-verification-email']) ?>
-                </div>
+               <!-- <?= $form->field($model, 'rememberMe')->checkbox() ?> -->
 
                 <div class="form-group">
                     <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
                 </div>
 
-                <?=
+                <!--<?=
                 yii\authclient\widgets\AuthChoice::widget([
                     'baseAuthUrl' => ['/user/default/auth'],
                     'popupMode' => false,
                 ])
-            ?>
+            ?>-->
             <?php ActiveForm::end(); ?>
+
+            <div style="color:#999;margin:1em 0">
+                <?= Html::a('Восстановление пароля', ['/user/default/request-password-reset']) ?>.
+                <!--<?= Html::a('Подтвердить e-mail', ['/user/default/resend-verification-email'], ['class'=>'btn btn-primary ']) ?>-->
+            </div>
+
+            <br>
+            <div>
+                <p>Если у вас нет акаунта</p>
+                <?= Html::a('Зарегестрироваться',
+                    ['/user/default/signup'],
+                    [
+                        'class' => 'btn btn-primary btn-block',
+                        'data' => [
+                            'method' => 'post',
+                            'params' => ['user_type' => User::TYPE_TEACHER]
+                        ]
+                    ])
+                ?>.
+            </div>
         </div>
     </div>
 </div>

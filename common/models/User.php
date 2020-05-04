@@ -28,6 +28,9 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    const TYPE_ADMIN = 1; // Админ
+    const TYPE_TEACHER = 2; // Автошкола/инструктор
+    const TYPE_USER = 3; // Пользователь/ученик
 
     /**
      * {@inheritdoc}

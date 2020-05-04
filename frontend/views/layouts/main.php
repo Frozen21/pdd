@@ -39,7 +39,6 @@ AppAsset::register($this);
         ['label' => 'Главная', 'url' => ['/site/index']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/user/default/signup']];
         $menuItems[] = ['label' => 'Вход', 'url' => ['/user/default/login']];
     } else {
         $menuItems = [
@@ -77,8 +76,6 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
 
