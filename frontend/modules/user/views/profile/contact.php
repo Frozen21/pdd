@@ -11,9 +11,10 @@ $this->title = 'Написать отзыв';
 
 ?>
 <div class="site-contact">
-
     <div class="row">
-        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+
+        </div>
         <div class="col-lg-4">
             <h1><?= Html::encode($this->title) ?></h1>
             <p>

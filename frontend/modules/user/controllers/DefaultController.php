@@ -123,8 +123,6 @@ class DefaultController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->signup($user_type)) {
             Yii::$app->session->setFlash('success', 'Спасибо за регистрацию, на указанную вами на почту выслано письмо.');
             return $this->goHome();
-        } else {
-            Yii::$app->session->setFlash('error', 'При регистрации что то пошло не так');
         }
 
         return $this->render('signup', [
@@ -197,7 +195,6 @@ class DefaultController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         if ($user = $model->verifyEmail()) {
-            var_dump($user);
             if (Yii::$app->user->login($user)) {
                 Yii::$app->session->setFlash('success', 'Ваша почта подтвержедна!');
                 return $this->goHome();

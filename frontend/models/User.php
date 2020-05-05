@@ -23,9 +23,10 @@ use yii\web\IdentityInterface;
  * @property string $password write-only password
  * @property string $last_name
  * @property string $first_name
+ * @property string $middle_name
  * @property string $phone
  * @property bool $actual
- * @property bool $type
+ * @property int $type
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -164,6 +165,61 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUserName()
     {
         return $this->username;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMiddleName()
+    {
+        return $this->middle_name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getActual()
+    {
+        return $this->actual;
+    }
+
+    public function isTeacher()
+    {
+        return $this->type == User::TYPE_TEACHER;
+    }
+
+    public function isUser()
+    {
+        return $this->type == User::TYPE_USER;
+    }
+
+    public function isAdmin()
+    {
+        return $this->type == User::TYPE_ADMIN;
     }
 
     /**

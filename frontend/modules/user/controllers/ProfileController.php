@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use frontend\modules\user\models\ContactForm;
 use yii\filters\AccessControl;
+use frontend\models\User;
 
 
 /**
@@ -23,8 +24,34 @@ class ProfileController extends Controller
         ];
     }
 
+    /**
+     * Displays index page.
+     *
+     * @return mixed
+     */
     public function actionIndex() {
-        return $this->render('index');
+        $user = User::findIdentity(Yii::$app->user->getId());
+
+        if ($user->getActual()) {
+            return $this->render('index', [
+                'user' => $user
+            ]);
+        } else {
+            return $this->redirect('/user/profile/edit');
+        }
+    }
+
+    /**
+     * Displays profile edit page.
+     *
+     * @return mixed
+     */
+    public function actionEdit() {
+        $user = User::findIdentity(Yii::$app->user->getId());
+
+        return $this->render('edit', [
+            'user' => $user
+        ]);
     }
 
     /**

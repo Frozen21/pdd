@@ -4,6 +4,7 @@ namespace frontend\modules\user\models;
 use Yii;
 use yii\base\Model;
 use frontend\models\User;
+use frontend\models\Profile;
 use yii\base\ErrorException;
 
 /**
@@ -69,10 +70,17 @@ class SignupForm extends Model
             $user->generateAuthKey();
             $user->generateEmailVerificationToken();
             $user->type = $user_type;
-            if ($user->save() && $this->sendEmail($user)) {
-                $transaction->commit();
-                return true;
+            // Доработать логику
+            if ($user->save()) {
+                $profile = new Profile();
+                $profile->user_id = $user->id;
+                if ($profile->save() && $this->sendEmail($user)) {
+                    $transaction->commit();
+                    return true;
+                }
             }
+            $transaction->rollBack();
+            return false;
         } catch (ErrorException $e) {
             $transaction->rollBack();
             return false;

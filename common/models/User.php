@@ -21,6 +21,12 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property string $last_name
+ * @property string $first_name
+ * @property string $middle_name
+ * @property string $phone
+ * @property bool $actual
+ * @property bool $type
  */
 class User extends ActiveRecord implements IdentityInterface
 {
