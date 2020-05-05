@@ -11,6 +11,7 @@ use frontend\models\User;
 class ResetPasswordForm extends Model
 {
     public $password;
+    public $password_confirm;
 
     /**
      * @var \common\models\User
@@ -45,6 +46,20 @@ class ResetPasswordForm extends Model
         return [
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+            ['password_confirm', 'required'],
+            ['password_confirm', 'string', 'min' => 6],
+            ['password_confirm', 'compare', 'compareAttribute' => 'password', 'message' => "Пароль не совпадает" ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'password' => 'Пароль',
+            'password_confirm' => 'Подтвердите пароль'
         ];
     }
 
@@ -60,5 +75,15 @@ class ResetPasswordForm extends Model
         $user->removePasswordResetToken();
 
         return $user->save(false);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUsername()
+    {
+        $user = $this->_user;
+
+        return $user->getUserName();
     }
 }

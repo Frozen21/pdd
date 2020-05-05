@@ -4,6 +4,7 @@ namespace frontend\modules\user\models;
 use Yii;
 use yii\base\Model;
 use frontend\models\User;
+use yii\base\ErrorException;
 
 /**
  * Signup form
@@ -23,14 +24,14 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Данный логин уже используется'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Данный Е-мейл уже используется'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
@@ -44,7 +45,7 @@ class SignupForm extends Model
     {
         return [
             'username' => 'Логин',
-            'email' => 'Емейл',
+            'email' => 'Е-мейл',
             'password' => 'Пароль',
         ];
     }
@@ -59,16 +60,23 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        $user->type = $user_type;
-        return $user->save() && $this->sendEmail($user);
-
+        try {
+            $transaction = User::getDb()->beginTransaction();
+            $user = new User();
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
+            $user->generateEmailVerificationToken();
+            $user->type = $user_type;
+            if ($user->save() && $this->sendEmail($user)) {
+                $transaction->commit();
+                return true;
+            }
+        } catch (ErrorException $e) {
+            $transaction->rollBack();
+            return false;
+        }
     }
 
     /**
@@ -84,9 +92,9 @@ class SignupForm extends Model
                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
             ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->setSubject('Регистрация на ' . Yii::$app->name)
             ->send();
     }
 }

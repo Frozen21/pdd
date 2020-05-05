@@ -161,6 +161,14 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+    public function getUserName()
+    {
+        return $this->username;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
